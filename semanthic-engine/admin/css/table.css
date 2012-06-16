@@ -1,0 +1,238 @@
+/* ------------------
+ styling for the tables 
+   ------------------   */
+
+
+body
+{
+	line-height: 1.6em;
+}
+#hor-minimalist-b
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 14px;
+	background: #fff;
+	margin: 25px;
+	width: 80%;
+	border-collapse: collapse;
+	text-align: left;
+	margin-top: 0px;
+}
+#hor-minimalist-b th
+{
+	font-size: 14px;
+	font-weight: normal;
+	color: #000;
+	padding: 10px 8px;
+	border-bottom: 2px solid #000;
+}
+#hor-minimalist-b td
+{
+	border-bottom: 1px solid #ccc;
+	color: #565051;
+	padding: 6px 8px;
+}
+#hor-minimalist-b tbody tr:hover td
+{
+	color: #000;
+}
+
+
+#ver-minimalist
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;
+	width: 480px;
+	text-align: left;
+	border-collapse: collapse;
+}
+#ver-minimalist th
+{
+	padding: 8px 2px;
+	font-weight: normal;
+	font-size: 14px;
+	border-bottom: 2px solid #6678b1;
+	border-right: 30px solid #fff;
+	border-left: 30px solid #fff;
+	color: #039;
+}
+#ver-minimalist td
+{
+	padding: 12px 2px 0px 2px;
+	border-right: 30px solid #fff;
+	border-left: 30px solid #fff;
+	color: #669;
+}
+
+
+#box-table-a
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;
+	width: 480px;
+	text-align: left;
+	border-collapse: collapse;
+}
+#box-table-a th
+{
+	font-size: 13px;
+	font-weight: normal;
+	padding: 8px;
+	background: #b9c9fe;
+	border-top: 4px solid #aabcfe;
+	border-bottom: 1px solid #fff;
+	color: #039;
+}
+#box-table-a td
+{
+	padding: 8px;
+	background: #e8edff; 
+	border-bottom: 1px solid #fff;
+	color: #669;
+	border-top: 1px solid transparent;
+}
+#box-table-a tr:hover td
+{
+	background: #d0dafd;
+	color: #339;
+}
+
+
+#box-table-b
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;
+	width: 480px;
+	text-align: center;
+	border-collapse: collapse;
+	border-top: 7px solid #9baff1;
+	border-bottom: 7px solid #9baff1;
+}
+#box-table-b th
+{
+	font-size: 13px;
+	font-weight: normal;
+	padding: 8px;
+	background: #e8edff;
+	border-right: 1px solid #9baff1;
+	border-left: 1px solid #9baff1;
+	color: #039;
+}
+#box-table-b td
+{
+	padding: 8px;
+	background: #e8edff; 
+	border-right: 1px solid #aabcfe;
+	border-left: 1px solid #aabcfe;
+	color: #669;
+}
+
+
+#hor-zebra
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;
+	width: 480px;
+	text-align: left;
+	border-collapse: collapse;
+}
+#hor-zebra th
+{
+	font-size: 14px;
+	font-weight: normal;
+	padding: 10px 8px;
+	color: #039;
+}
+#hor-zebra td
+{
+	padding: 8px;
+	color: #669;
+}
+#hor-zebra .odd
+{
+	background: #e8edff; 
+}
+
+
+#ver-zebra
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;
+	width: 480px;
+	text-align: left;
+	border-collapse: collapse;
+}
+#ver-zebra th
+{
+	font-size: 14px;
+	font-weight: normal;
+	padding: 12px 15px;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #fff;
+	color: #039;
+}
+#ver-zebra td
+{
+	padding: 8px 15px;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #fff;
+	color: #669;
+}
+.vzebra-odd
+{
+	background: #eff2ff;
+}
+.vzebra-even
+{
+	background: #e8edff;
+}
+#ver-zebra #vzebra-adventure, #ver-zebra #vzebra-children
+{
+	background: #d0dafd;
+	border-bottom: 1px solid #c8d4fd;
+}
+#ver-zebra #vzebra-comedy, #ver-zebra #vzebra-action
+{
+	background: #dce4ff;
+	border-bottom: 1px solid #d6dfff;
+}
+
+
+#one-column-emphasis
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;
+	width: 480px;
+	text-align: left;
+	border-collapse: collapse;
+}
+#one-column-emphasis th
+{
+	font-size: 14px;
+	font-weight: normal;
+	padding: 12px 15px;
+	color: #039;
+}
+#one-column-emphasis td
+{
+	padding: 10px 15px;
+	color: #669;
+	border-top: 1px solid #e8edff;
+}
+.oce-first
+{
+	background: #d0dafd;
+	border-right: 10px solid transparent;
+	border-left: 10px solid transparent;
+}
+#one-column-emphasis tr:hover td
+{
+	color: #339;
+	background: #eff2ff;
+}
