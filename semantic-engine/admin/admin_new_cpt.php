@@ -43,11 +43,11 @@
         <div class="grid-4-12 ">
 	    	<label for="admin_position"><?php _e('Position in admin menu'); ?> (default: below Comments)</label> 
 	  		<select name="admin_position" id="admin_position">
-	  			<option value="6.<?php echo time(); ?>">Below Posts</option>
-	  			<option value="11.<?php echo time(); ?>">Below Media</option>
-	  			<option value="16.<?php echo time(); ?>">Below Links</option>
-	  			<option value="22.<?php echo time(); ?>">Below Pages</option>
-	  			<option value="28.<?php echo time(); ?>">Below Comments</option>
+	  			<option value="6">Below Posts</option>
+	  			<option value="11">Below Media</option>
+	  			<option value="16">Below Links</option>
+	  			<option value="22">Below Pages</option>
+	  			<option value="28">Below Comments</option>
 	  		</select>
         </div>
         <div class="clear"></div>
@@ -60,6 +60,6 @@
         </div>
         <div class="clear"></div>
 		<input type="submit" value="Save Custom Type" class="left" style="margin-left:25px;" />
-		<input type="hidden" name="semanthic_new_custom_type" value="true" />       
+		<input type="hidden" name="semantic_new_custom_type" value="true" />       
     </fieldset>
  </form>

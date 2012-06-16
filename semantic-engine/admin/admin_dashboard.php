@@ -19,18 +19,18 @@
 				
 			</thead>
 			<tbody>
-				<?php foreach($semanthic_CPT as $semanthic_row) { ?>		
+				<?php foreach($semantic_CPT as $semantic_row) { ?>		
 					<tr>
-						<td><?php echo $semanthic_row->ID; ?></td>
-						<td><?php echo $semanthic_row->title; ?></td>
-						<td><?php if($semanthic_row->active == 1) echo 'Yes'; else echo 'No';?></td>
+						<td><?php echo $semantic_row->ID; ?></td>
+						<td><?php echo $semantic_row->title; ?></td>
+						<td><?php if($semantic_row->active == 1) echo 'Yes'; else echo 'No';?></td>
 						<td><a href="#"><?php _e('Edit'); ?></a> &nbsp; <a href="#"><?php _e('Delete'); ?></a></td>
 					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
 
-               <a href="admin.php?page=semanthic-engine-new-content-type"><input class="left" title="<?php _e('Add new'); ?>" value="<?php _e('Add new'); ?>" type="button" style="margin-left:25px;"></a>
+               <a href="admin.php?page=semantic-engine-new-content-type"><input class="left" title="<?php _e('Add new'); ?>" value="<?php _e('Add new'); ?>" type="button" style="margin-left:25px;"></a>
         
     </fieldset>
  </form>
