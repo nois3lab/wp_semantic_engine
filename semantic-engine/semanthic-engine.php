@@ -86,7 +86,7 @@ function semantic_engine_sql_install() {
 		  id_cpt int(11) NOT NULL,
 		  title varchar(40) NOT NULL,
 		  widget tinyint NOT NULL,
-		  values text NOT NULL,
+		  csv_values text NOT NULL,
 		  PRIMARY KEY  (ID),
 		  KEY id_cpt (id_cpt)
 		) AUTO_INCREMENT=1 ;";
