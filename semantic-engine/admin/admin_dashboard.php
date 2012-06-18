@@ -1,8 +1,7 @@
-
-<script type="text/javascript" src="<?php echo get_bloginfo('template_directory'); ?>/admin/js/formee.js"></script>
-<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/admin/css/formee-structure.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/admin/css/formee-style.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/admin/css/table.css" type="text/css" media="screen" />
+<script type="text/javascript" src="<?php echo SEMANTIC_ENGINE_URL; ?>/admin/js/formee.js"></script>
+<link rel="stylesheet" href="<?php echo SEMANTIC_ENGINE_URL; ?>/admin/css/formee-structure.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo SEMANTIC_ENGINE_URL; ?>/admin/css/formee-style.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo SEMANTIC_ENGINE_URL; ?>/admin/css/table.css" type="text/css" media="screen" />
 
 <!-- formee-->
 <form class="formee">
@@ -24,7 +23,7 @@
 						<td><?php echo $semantic_row->ID; ?></td>
 						<td><?php echo $semantic_row->title; ?></td>
 						<td><?php if($semantic_row->active == 1) echo 'Yes'; else echo 'No';?></td>
-						<td><a href="#"><?php _e('Edit'); ?></a> &nbsp; <a href="#"><?php _e('Delete'); ?></a></td>
+						<td><a href="admin.php?page=semantic-engine-dashboard&cpt=<?php echo $semantic_row->ID; ?>&action=custom_fields"><?php _e('Manage Custom Fields'); ?></a> &nbsp; <a href="#"><?php _e('Edit'); ?></a> &nbsp; <a href="#"><?php _e('Delete'); ?></a></td>
 					</tr>
 				<?php } ?>
 			</tbody>

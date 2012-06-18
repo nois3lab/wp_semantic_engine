@@ -1,8 +1,8 @@
 
-<script type="text/javascript" src="<?php echo get_bloginfo('template_directory'); ?>/admin/js/formee.js"></script>
-<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/admin/css/formee-structure.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/admin/css/formee-style.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/admin/css/table.css" type="text/css" media="screen" />
+<script type="text/javascript" src="<?php echo SEMANTIC_ENGINE_URL; ?>/admin/js/formee.js"></script>
+<link rel="stylesheet" href="<?php echo SEMANTIC_ENGINE_URL; ?>/admin/css/formee-structure.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo SEMANTIC_ENGINE_URL; ?>/admin/css/formee-style.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo SEMANTIC_ENGINE_URL; ?>/admin/css/table.css" type="text/css" media="screen" />
 
 
 <!-- formee-->
@@ -60,6 +60,6 @@
         </div>
         <div class="clear"></div>
 		<input type="submit" value="Save Custom Type" class="left" style="margin-left:25px;" />
-		<input type="hidden" name="semantic_new_custom_type" value="true" />       
+		<input type="hidden" name="semantic_post_submit" value="new_custom_type" />       
     </fieldset>
  </form>
