@@ -2,6 +2,7 @@ Wordpress Semantic Engine
 ===============
 
 Wordpress Semantic Engine is a core theme (without any UI) that aims to give some help to theme developers and web master who care about semantic and web 3.0 but don't have enough coding skills. 
+
 Beyond that, is quite a powerful tool for creating and managing custom post types and custom fields through a user interface 
 
 Essentially, what it *now does* for the backend is:
@@ -16,9 +17,13 @@ Changelog
 
 18/6
 Supports custom post types, including a number of variables such as plural title, single title, position in admin sidebar, slug (url rewrite nicename), exclude from search and so on.
+
 Support custom fields for CPTs. These mean you can create as many CF as you like choosing, for each one, an html widget - like select or radio button. These custom fields will be filled directly from add/edit page of a CPT, just under the wysiyg box.
 Support multiple values for custom fields, like options in a select tag.
+
 In progress: Support multiple entries for input text. For example, in a 'recipes' CPT you will be able to add as many ingredients as you wish.
+
+
 15/6
 First push!
 
