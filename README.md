@@ -15,7 +15,7 @@ In progress: view engine for single, page e category template. Eventually this v
 Changelog
 ===============
 
-18/6
+18/6/12
 Supports custom post types, including a number of variables such as plural title, single title, position in admin sidebar, slug (url rewrite nicename), exclude from search and so on.
 
 Support custom fields for CPTs. These mean you can create as many CF as you like choosing, for each one, an html widget - like select or radio button. These custom fields will be filled directly from add/edit page of a CPT, just under the wysiyg box.
@@ -24,7 +24,7 @@ Support multiple values for custom fields, like options in a select tag.
 In progress: Support multiple entries for input text. For example, in a 'recipes' CPT you will be able to add as many ingredients as you wish.
 
 
-15/6
+15/6/12
 First push!
 
 
