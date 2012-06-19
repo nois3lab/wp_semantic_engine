@@ -10,10 +10,13 @@ Essentially, what it *now does* for the backend is:
 - store custom fields data in a table - then select fields by content types
 - create admin UI to manage both CPTs and custom fields
 
-In progress: view engine for single, page e category template. Eventually this view mode will support microdata schema according to schema.org
+In progress: view engine for single, page and category template. Eventually this view mode will support microdata schema according to schema.org
 
 Changelog
 ===============
+
+19/6/12
+Added support for multiple entries for input text. Any entry get serialized in one big array. Next: edit and delete CPTs, CFs and multiple entries.
 
 18/6/12
 Supports custom post types, including a number of variables such as plural title, single title, position in admin sidebar, slug (url rewrite nicename), exclude from search and so on.
