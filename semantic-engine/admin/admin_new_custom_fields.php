@@ -9,7 +9,7 @@
 <form class="formee" method="post" action="">
     <fieldset>
         <legend>Manage Fields for <?php echo $semantic_CPT->title; ?></legend>
-        <div class="grid-2-12 "><label>Title</label></div><div class="grid-2-12 "><label>Widget Type</label></div><div class="grid-2-12"><label>Allow multiple entries</label></div><div class="grid-2-12 "><label>Predefined Values (<b>CSV</b>)</label></div><div class="grid-2-12 "><label>Actions</label></div>
+        <div class="grid-2-12 "><label>Title<br/>(only shows in admin panel)</label></div><div class="grid-2-12 "><label>Widget Type</label></div><div class="grid-2-12"><label>Allow multiple entries <br/>(only input text)</label></div><div class="grid-2-12 "><label>Predefined Values <br/>(comma separated values)</label></div><div class="grid-2-12 "><label>Actions</label></div>
         <hr class="clear"/>
         <?php foreach($semantic_CF as $row_CF) { ?>
 		<div class="grid-2-12 "><label><?php echo $row_CF->title;?></label></div><div class="grid-2-12 "><label><?php echo $row_CF->widget;?></label></div><div class="grid-2-12 "><label><?php echo $row_CF->multiple_entries;?></label></div><div class="grid-2-12 "><label><?php echo $row_CF->csv_values;?></label></div><div class="grid-2-12 "><label><a href="#"><?php _e('Edit'); ?></a> &nbsp; <a href="#"><?php _e('Delete'); ?></a></label></div>

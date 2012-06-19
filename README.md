@@ -1,7 +1,7 @@
 Wordpress Semantic Engine
 ===============
 
-Wordpress Semantic Engine is a core theme (without any UI) that aims to give some help to theme developers and web master who care about semantic and web 3.0 but don't have enough coding skills. 
+Wordpress Semantic Engine is a plugin that aims to give some help to theme developers and web master who care about semantic and web 3.0 but don't have enough coding skills. 
 
 Beyond that, is quite a powerful tool for creating and managing custom post types and custom fields through a user interface 
 
