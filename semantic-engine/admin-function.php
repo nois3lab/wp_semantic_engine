@@ -4,13 +4,18 @@ function semantic_admin_html_widget($label, $values, $widget, $post, $cf_id, $al
 		case 1:
 		#input text
 			if(!$allow_multiple) {
-				$val = get_post_meta($post, strtolower($label).$cf_id, true);
-				echo '<label for="id_'.$label.'"> '.$label.'</label> <input type="text" name="'.strtolower($label).'" id="id_'.$label.'" value="'.$val.'" />';
+				$val = get_post_meta($post, sanitize_title($label).$cf_id, true);
+				echo '<label for="id_'.$label.'"> '.$label.'</label> <input type="text" name="'.sanitize_title($label).'" id="id_'.$label.'" value="'.$val.'" />';
 			} else {
-				$val = get_post_meta($post, strtolower($label).$cf_id, true);
+				$val = get_post_meta($post, sanitize_title($label).$cf_id, true);
+				if(!empty($val)):
 				$val = unserialize($val);
-				foreach($val as $vl)
-				echo '<label for="id_'.$label.'"> '.$label.'</label> <input type="text" name="'.strtolower($label).'[]" id="id_'.$label.'" value="'.$vl.'" /><br/>';
+				foreach($val as $vl):
+					echo '<label for="id_'.$label.'"> '.$label.'</label> <input type="text" name="'.sanitize_title($label).'[]" id="id_'.$label.'" value="'.$vl.'" /><br/>';
+				endforeach;
+				else:
+					echo '<label for="id_'.$label.'"> '.$label.'</label> <input type="text" name="'.sanitize_title($label).'[]" id="id_'.$label.'" value="" /><br/>';
+				endif;
 				echo '<br/><a style="cursor:pointer;" onClick="addNewEntry(\''.$label.'\');">Add new entry for '.$label.'</a>';
 			} 
 			break;
@@ -20,12 +25,12 @@ function semantic_admin_html_widget($label, $values, $widget, $post, $cf_id, $al
 				$values = explode(',', $values);
 				foreach($values as $vl) {
 					$vl = trim($vl);
-					$data = get_post_meta($post, strtolower($label).$cf_id, true);
+					$data = get_post_meta($post, sanitize_title($label).$cf_id, true);
 					$data = explode(",", $data);
 					if(in_array($vl, $data))
-					echo '<input type="checkbox" id="id_'.$vl.'" name="'.strtolower($label).'[]"  value="'.$vl.'" checked="true">&nbsp;<label for="id_'.$vl.'">'.$vl.'</label>&nbsp; &nbsp;';
+					echo '<input type="checkbox" id="id_'.$vl.'" name="'.sanitize_title($label).'[]"  value="'.$vl.'" checked="true">&nbsp;<label for="id_'.$vl.'">'.$vl.'</label>&nbsp; &nbsp;';
 					else
-					echo '<input type="checkbox" id="id_'.$vl.'" name="'.strtolower($label).'[]"  value="'.$vl.'">&nbsp;<label for="id_'.$vl.'">'.$vl.'</label>&nbsp; &nbsp;';
+					echo '<input type="checkbox" id="id_'.$vl.'" name="'.sanitize_title($label).'[]"  value="'.$vl.'">&nbsp;<label for="id_'.$vl.'">'.$vl.'</label>&nbsp; &nbsp;';
 				}
 			break;
 		case 3:
@@ -33,20 +38,20 @@ function semantic_admin_html_widget($label, $values, $widget, $post, $cf_id, $al
 				$values = explode(',', $values);
 				foreach($values as $vl) {
 					$vl = trim($vl);
-					if(get_post_meta($post, strtolower($label).$cf_id, true) == $vl)
-					echo '<input type="radio" name="'.strtolower($label).'" id="id_'.$vl.'"  value="'.$vl.'" checked="true">&nbsp;<label for="id_'.$vl.'">'.$vl.'</label>&nbsp; &nbsp;';
+					if(get_post_meta($post, sanitize_title($label).$cf_id, true) == $vl)
+					echo '<input type="radio" name="'.sanitize_title($label).'" id="id_'.$vl.'"  value="'.$vl.'" checked="true">&nbsp;<label for="id_'.$vl.'">'.$vl.'</label>&nbsp; &nbsp;';
 					else
-					echo '<input type="radio" name="'.strtolower($label).'" id="id_'.$vl.'"  value="'.$vl.'" checked="true">&nbsp;<label for="id_'.$vl.'">'.$vl.'</label>&nbsp; &nbsp;';
+					echo '<input type="radio" name="'.sanitize_title($label).'" id="id_'.$vl.'"  value="'.$vl.'" checked="true">&nbsp;<label for="id_'.$vl.'">'.$vl.'</label>&nbsp; &nbsp;';
 				}
 			break;
 		case 4:
 		#select one value
 			echo '<label for="id_'.$label.'">'.$label.'</label> &nbsp;';
-			echo '<select name="'.strtolower($label).'" id="id_'.$label.'">';
+			echo '<select name="'.sanitize_title($label).'" id="id_'.$label.'">';
 				$values = explode(',', $values);
 				foreach($values as $vl) {
 					$vl = trim($vl);
-					if(get_post_meta($post, strtolower($label).$cf_id, true) == $vl)
+					if(get_post_meta($post, sanitize_title($label).$cf_id, true) == $vl)
 					echo '<option value="'.$vl.'" selected="true">'.$vl.'</option>';
 					else
 					echo '<option value="'.$vl.'">'.$vl.'</option>';
@@ -56,11 +61,11 @@ function semantic_admin_html_widget($label, $values, $widget, $post, $cf_id, $al
 		case 5:
 		#select multiple value
 			echo '<label for="id_'.$label.'">'.$label.'</label> &nbsp;';
-			echo '<select name="'.strtolower($label).'[]" id="id_'.$label.'" multiple="multiple">';
+			echo '<select name="'.sanitize_title($label).'[]" id="id_'.$label.'" multiple="multiple">';
 				$values = explode(',', $values);
 				foreach($values as $vl) {
 					$vl = trim($vl);
-					$data = get_post_meta($post, strtolower($label).$cf_id, true);
+					$data = get_post_meta($post, sanitize_title($label).$cf_id, true);
 					$data = explode(",", $data);
 					if(in_array($vl, $data))
 					echo '<option value="'.$vl.'" selected="true">'.$vl.'</option>';
@@ -69,6 +74,15 @@ function semantic_admin_html_widget($label, $values, $widget, $post, $cf_id, $al
 				}
 			echo '</select>';
 			break;
+		case 6:  
+		#image
+		$value = get_post_meta($post, sanitize_title($label).$cf_id, true);
+	    if ($value) { $image = wp_get_attachment_image_src($value, 'medium'); $image = $image[0]; }  
+		    echo   '<input name="'.sanitize_title($label).$cf_id.'" type="hidden" class="custom_upload_image" value="'.$value.'" /> 
+	                <label for="img'.$cf_id.'">'.$label.'</label><input class="custom_upload_image_button button" id="img'.$cf_id.'" type="button" value="Choose Image" />';  
+	               if(isset($image)) echo '<br/><img src="'.$image.'" class="custom_preview_image" alt="" alt="'.$label.'" /><br/>';
+	               echo ' <a href="#" class="custom_clear_image_button">Remove Image</a>';
+			break;  
 	}
 }
 

@@ -46,6 +46,7 @@ function semantic_engine_admin_init() {
 				break;
 		}
 	}
+	wp_enqueue_script('semantic-image', SEMANTIC_ENGINE_URL.'js/custom.js');
 }
 
 function semantic_engine_admin_menu() {
@@ -112,7 +113,7 @@ function semantic_engine_build_metabox($post) {
 
 function semantic_pre_get_posts( $query ) {
     if ( $query->is_main_query() && ! $query->get( 'post_type' ) )
-        $query->set( 'post_type', array('post', 'page', 'semantic_1') );
+        $query->set( 'post_type', array('post', 'semantic_1', 'semantic_2') );
 }
 
 function semantic_engine_CPT_setup() {
@@ -121,20 +122,20 @@ function semantic_engine_CPT_setup() {
 		register_post_type( 'semantic_'.$semantic_row_CPT->ID,
 		array(
 			'labels' => array(
-				'name' => $semantic_row_CPT->title,
+				'name'          => $semantic_row_CPT->title,
 				'singular_name' => $semantic_row_CPT->title_sing
 			),
-			'public' => true,
-			'has_archive' => true,
-			'exclude_from_search' => $semantic_row_CPT->exclude_from_search,
-			'show_ui' => true, 
-    		'show_in_menu' => true, 
-    		'show_in_admin_bar' => $semantic_row_CPT->show_in_toolbar,
-    		'menu_position' => $semantic_row_CPT->position,
-			'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
-			'rewrite' => array('slug' => $semantic_row_CPT->slug),
+			'public'               => true,
+			'has_archive'          => true,
+			'exclude_from_search'  => $semantic_row_CPT->exclude_from_search,
+			'show_ui'              => true, 
+			'show_in_menu'         => true, 
+			'show_in_admin_bar'    => $semantic_row_CPT->show_in_toolbar,
+			'menu_position'        => $semantic_row_CPT->position,
+			'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
+			'rewrite'              => array('slug' => $semantic_row_CPT->slug),
 			'register_meta_box_cb' => 'semantic_engine_meta_box_cb',
-			'taxonomies' => array('category', 'post_tag')
+			'taxonomies'           => array('category', 'post_tag')
 		)
 	);
 	}
@@ -155,19 +156,19 @@ function semantic_engine_save_postdata($post_id) {
 		return $post_id;
 	/**end security check**/
 	global $wpdb;
-	$cpt_id = str_replace('semantic_', '', $_POST['post_type']);
-	$table_name = $wpdb->prefix . "semantic_engine_CF";
+	$cpt_id      = str_replace('semantic_', '', $_POST['post_type']);
+	$table_name  = $wpdb->prefix . "semantic_engine_CF";
 	$semantic_CF = $wpdb->get_results( "SELECT * FROM $table_name WHERE id_cpt = '$cpt_id'");
 	foreach($semantic_CF as $cf_row):
 
-		$data = $_POST[strtolower($cf_row->title)];
+		$data = $_POST[sanitize_title($cf_row->title)];
 		if($cf_row->widget == 2 || $cf_row->widget == 5)
 			$data = implode(',',$data);
 
 		if($cf_row->multiple_entries == 1)
 			$data = serialize($data);
 
-		$field_name = strtolower($cf_row->title).$cf_row->ID;
+		$field_name = sanitize_title($cf_row->title).$cf_row->ID;
 		if(get_post_meta($post_id, $field_name) == "")
 			add_post_meta($post_id, $field_name, $data, true);
 		elseif($data != get_post_meta($post_id, $field_name, true))
@@ -178,3 +179,48 @@ function semantic_engine_save_postdata($post_id) {
 	endforeach;
 
 }
+
+function semantic_engine_view_content($content) {
+	global $post, $wpdb;
+	if(strpos($post->post_type, 'semantic_') !== false):
+		$CPT         = str_replace('semantic_', '', $post->post_type);
+		$table_name  = $wpdb->prefix . "semantic_engine_CF";
+		$semantic_CF = $wpdb->get_results( "SELECT * FROM $table_name WHERE id_cpt = '$CPT'");
+		foreach($semantic_CF as $cf_row):
+			$field_name = sanitize_title($cf_row->title).$cf_row->ID;
+			$val        = get_post_meta($post->ID, $field_name, true);
+			if(!empty($val)):
+				$vl = semantic_engine_get_meta_value_by_type($val, $cf_row->widget, $cf_row->multiple_entries);
+			endif;
+		endforeach;
+	endif;
+	return $content;
+}
+
+function semantic_engine_get_meta_value_by_type($meta, $type, $allow_multiple = null) {
+	switch ($type) {
+		case 1:
+			if(!$allow_multiple)
+				return $meta;
+			else
+				return unserialize($meta);
+			break;
+		case 2:
+				return explode(",", $meta);
+			break;
+		case 3:
+				return $meta;
+			break;
+		case 4:
+				return $meta;
+			break;
+		case 5:
+				return explode(",", $meta);
+			break;
+		default:
+			return $meta;
+			break;
+	}
+}
+add_filter('the_content', 'semantic_engine_view_content', 1);
+

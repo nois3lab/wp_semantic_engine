@@ -27,6 +27,7 @@
 	  			<option value="3">Radio (one value)</option>
 	  			<option value="4">Select (one value)</option>
 	  			<option value="5">Select (multiple values)</option>
+	  			<option value="6">Image</option>
 	  		</select>
         </div>	
        <div class="grid-2-12 ">
