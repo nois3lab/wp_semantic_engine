@@ -1,7 +1,7 @@
 Wordpress Semantic Engine
 ===============
 
-Wordpress Semantic Engine is a core theme (without any UI) that aims to give some help to theme developers and web master who care about semantic and web 3.0 but don't have enough coding skills. 
+Wordpress Semantic Engine is a plugin that aims to give some help to theme developers and web master who care about semantic and web 3.0 but don't have enough coding skills. 
 
 Beyond that, is quite a powerful tool for creating and managing custom post types and custom fields through a user interface 
 
@@ -10,10 +10,13 @@ Essentially, what it *now does* for the backend is:
 - store custom fields data in a table - then select fields by content types
 - create admin UI to manage both CPTs and custom fields
 
-In progress: view engine for single, page e category template. Eventually this view mode will support microdata schema according to schema.org
+In progress: view engine for single, page and category template. Eventually this view mode will support microdata schema according to schema.org
 
 Changelog
 ===============
+
+19/6/12
+Added support for multiple entries for input text. Any entry get serialized in one big array. Next: edit and delete CPTs, CFs and multiple entries.
 
 18/6/12
 Supports custom post types, including a number of variables such as plural title, single title, position in admin sidebar, slug (url rewrite nicename), exclude from search and so on.
