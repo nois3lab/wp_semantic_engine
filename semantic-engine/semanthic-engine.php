@@ -8,13 +8,16 @@ Author URI: http://nois3lab.it/
 Version: 0.1alfa
 */
 /** execute main query only once and then retrieve n times with global $semantic_CPT **/
-$semantic_CPT = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix ."semantic_engine_CPT");
+include_once('classes/SemanticEngine.class.php');
+$SemanticEngine = new SemanticEngine;
 /**add action area**/
 add_action('admin_init', 'semantic_engine_admin_init');
-add_action('init', 'semantic_engine_init');
+add_action('init', array(&$SemanticEngine, 'init'));
 add_action('pre_get_posts', 'semantic_pre_get_posts');
 add_action('save_post', 'semantic_engine_save_postdata');
 add_action('admin_menu', 'semantic_engine_admin_menu');
+/** add filter area **/
+add_filter('the_content', 'semantic_engine_view_content', 1);
 /** path define **/
 define('SEMANTIC_ENGINE_PATH', plugin_dir_path(__FILE__));
 define('SEMANTIC_ENGINE_URL',  plugin_dir_url(__FILE__));
@@ -33,6 +36,9 @@ function semantic_engine_admin_init() {
 		global $wpdb, $semantic_CPT;
 	include(SEMANTIC_ENGINE_PATH.'admin-function.php');
 	//post submit new CPT
+	wp_enqueue_script('jquery-ui-core');
+	wp_enqueue_script('jquery-ui-button');
+	wp_enqueue_script('jquery-ui-datepicker');
 	if(isset($_POST['semantic_post_submit'])) {
 		switch ($_POST['semantic_post_submit']) {
 			case 'new_custom_type':
@@ -56,36 +62,6 @@ function semantic_engine_admin_menu() {
 
 }
 
-function semantic_engine_sql_install() {
-	global $wpdb;
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	$sql = "CREATE TABLE `".$wpdb->prefix."semantic_engine_CPT` (
-			  ID int(11) NOT NULL AUTO_INCREMENT,
-			  title varchar(20) NOT NULL,
-			  title_sing varchar(20) NOT NULL,
-			  slug varchar(20) NOT NULL,
-			  front_base tinyint(1) NOT NULL,
-			  exclude_from_search tinyint(1) NOT NULL,
-			  position varchar(20) NOT NULL,
-			  show_in_toolbar tinyint(1) NOT NULL,
-			  active tinyint(1) NOT NULL,
-			  PRIMARY KEY  (ID)
-			) AUTO_INCREMENT=1 ;";
-	$sql.= "CREATE TABLE ".$wpdb->prefix."semantic_engine_CF (
-		  ID int(11) NOT NULL AUTO_INCREMENT,
-		  id_cpt int(11) NOT NULL,
-		  title varchar(40) NOT NULL,
-		  widget tinyint NOT NULL,
-		  csv_values text NOT NULL,
-		  multiple_entries tinyint(1) NOT NULL,
-		  PRIMARY KEY  (ID),
-		  KEY id_cpt (id_cpt)
-		) AUTO_INCREMENT=1 ;";
-
-	dbDelta($sql);
-	update_option("semantic_engine_db_version", "0.1");
-
-}
 
 function semantic_engine_meta_box_cb($post_obj) {
 	add_meta_box('id'.$post_obj->post_type, translate('Custom fields'), 'semantic_engine_build_metabox', $post_obj->post_type, 'normal', 'high'); 
@@ -93,8 +69,8 @@ function semantic_engine_meta_box_cb($post_obj) {
 
 function semantic_engine_build_metabox($post) {
 	global $wpdb;
-	$cpt_id = str_replace('semantic_', '', $post->post_type);
-	$table_name = $wpdb->prefix . "semantic_engine_CF";
+	$cpt_id      = str_replace('semantic_', '', $post->post_type);
+	$table_name  = $wpdb->prefix . "semantic_engine_CF";
 	$semantic_CF = $wpdb->get_results( "SELECT * FROM $table_name WHERE id_cpt = '$cpt_id'");
 	foreach($semantic_CF as $cf_row):
 		/**JavaScript print for multiple entries support*/ ?>
@@ -113,33 +89,10 @@ function semantic_engine_build_metabox($post) {
 
 function semantic_pre_get_posts( $query ) {
     if ( $query->is_main_query() && ! $query->get( 'post_type' ) )
-        $query->set( 'post_type', array('post', 'semantic_1', 'semantic_2') );
+        $query->set( 'post_type', array('post', 'semantic_1', 'semantic_2', 'semantic_3') );
 }
 
-function semantic_engine_CPT_setup() {
-	global $semantic_CPT;
-	foreach($semantic_CPT as $semantic_row_CPT) {
-		register_post_type( 'semantic_'.$semantic_row_CPT->ID,
-		array(
-			'labels' => array(
-				'name'          => $semantic_row_CPT->title,
-				'singular_name' => $semantic_row_CPT->title_sing
-			),
-			'public'               => true,
-			'has_archive'          => true,
-			'exclude_from_search'  => $semantic_row_CPT->exclude_from_search,
-			'show_ui'              => true, 
-			'show_in_menu'         => true, 
-			'show_in_admin_bar'    => $semantic_row_CPT->show_in_toolbar,
-			'menu_position'        => $semantic_row_CPT->position,
-			'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
-			'rewrite'              => array('slug' => $semantic_row_CPT->slug),
-			'register_meta_box_cb' => 'semantic_engine_meta_box_cb',
-			'taxonomies'           => array('category', 'post_tag')
-		)
-	);
-	}
-}
+
 
 
 function semantic_engine_save_postdata($post_id) {
@@ -182,10 +135,12 @@ function semantic_engine_save_postdata($post_id) {
 
 function semantic_engine_view_content($content) {
 	global $post, $wpdb;
-	if(strpos($post->post_type, 'semantic_') !== false):
-		$CPT         = str_replace('semantic_', '', $post->post_type);
+	if(strpos("semantic_", $post->post_type) == null)
+		return $content;
+
+	$cpt_id      = str_replace('semantic_', '', $post->post_type);
 		$table_name  = $wpdb->prefix . "semantic_engine_CF";
-		$semantic_CF = $wpdb->get_results( "SELECT * FROM $table_name WHERE id_cpt = '$CPT'");
+		$semantic_CF = $wpdb->get_results( "SELECT * FROM $table_name WHERE slug = '$post->post_type'");
 		foreach($semantic_CF as $cf_row):
 			$field_name = sanitize_title($cf_row->title).$cf_row->ID;
 			$val        = get_post_meta($post->ID, $field_name, true);
@@ -193,7 +148,6 @@ function semantic_engine_view_content($content) {
 				$vl = semantic_engine_get_meta_value_by_type($val, $cf_row->widget, $cf_row->multiple_entries);
 			endif;
 		endforeach;
-	endif;
 	return $content;
 }
 
@@ -217,10 +171,13 @@ function semantic_engine_get_meta_value_by_type($meta, $type, $allow_multiple = 
 		case 5:
 				return explode(",", $meta);
 			break;
+			case 6:
+				return $meta;
+			break;
 		default:
 			return $meta;
 			break;
 	}
 }
-add_filter('the_content', 'semantic_engine_view_content', 1);
+
 
